@@ -14,7 +14,7 @@ Write a linear regression function called `attendance` that shows the relationsh
 
 ```python
 def attendance(advertising):
-    pass
+    return 3/2*int(advertising)+0
 ```
 
 
@@ -35,7 +35,7 @@ As the old adage goes, "Don't ask the barber if you need a haircut!" Likewise, d
 
 ```python
 def attendance_with_friends(advertising):
-    pass
+    return 3/2*int(advertising)+20
 ```
 
 
@@ -88,7 +88,8 @@ Now let's write a couple functions that we can use going forward.  We'll write a
 
 ```python
 def m_b_data(m, b, x_values):
-    pass
+    y_values = list(map(lambda x: m*x + b, x_values))
+    return {'x': x_values, 'y': y_values}
 ```
 
 
@@ -101,7 +102,9 @@ Now let's write a function called `m_b_trace` that uses our `m_b_data` function 
 
 ```python
 def m_b_trace(m, b, x_values, mode = 'lines', name = 'line function'):
-    pass
+    values = m_b_data(m, b, x_values)
+    values.update({'mode': mode, 'name': name})
+    return values
 ```
 
 
@@ -134,7 +137,7 @@ Write a function called `marginal_return_on_budget` that returns the expected am
 
 ```python
 def marginal_return_on_budget(first_show, second_show):
-    pass
+    return (second_show['attendance'] - first_show['attendance'])/(second_show['budget'] - first_show['budget'])
 ```
 
 
@@ -198,7 +201,13 @@ In this section, we'll write a function called `build_starting_line`. The functi
 
 ```python
 def slope(x_values, y_values):
-    pass
+    sorted_values = sorted_points(x_values, y_values)
+    x1 = sorted_values[0][0]
+    y1 = sorted_values[0][1]
+    x2 = sorted_values[-1][0]
+    y2 = sorted_values[-1][1]
+    m = (y2 - y1)/(x2 - x1)
+    return m
 ```
 
 
@@ -211,7 +220,12 @@ Now write a function called `y_intercept`.  Use the `slope` function to calculat
 
 ```python
 def y_intercept(x_values, y_values, m = None):
-    pass
+    sorted_values = sorted_points(x_values, y_values)
+    highest = sorted_values[-1]
+    if m == None:
+        m = slope(x_values, y_values)
+    offset = highest[1] - m*highest[0]
+    return offset
 ```
 
 
@@ -229,7 +243,12 @@ Now write a function called `build_starting_line` that given a list of `x_values
 
 ```python
 def build_starting_line(x_values, y_values):
-    pass
+    sorted_values = sorted_points(x_values, y_values)
+    highest = sorted_values[-1]
+    lowest = sorted_values[0]
+    m = slope(x_values, y_values)
+    b = y_intercept(x_values, y_values, m)
+    return {'m': m, 'b': b}
 ```
 
 
@@ -250,7 +269,7 @@ shows = [first_show, second_show]
 
 ```python
 def expected_value_for_line(m, b, x_value):
-    pass
+    return m*x_value + b
 ```
 
 
